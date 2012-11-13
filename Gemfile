@@ -10,13 +10,11 @@ group :test do
   # Pretty printed test output
   gem 'turn', require: false
 	gem 'sqlite3', '~> 1.3.5'  
-	gem "mocha" 
+	# gem "mocha" 
 	gem "factory_girl_rails"
   gem "capybara"
   gem "guard-rspec"
 	gem 'growl'  
-	gem 'guard-spork', '1.2.0'
-	gem 'spork', '0.9.2'
 end  
 
 group :development do |variable|
