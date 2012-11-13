@@ -1,0 +1,39 @@
+*.rbc
+*.sassc
+.sass-cache/
+.sass-cache
+capybara-*.html
+.rspec 
+.bundle
+/.bundle
+/vendor/bundle
+/log/*
+log/*.log
+/tmp/*
+tmp/
+db/*.sqlite3
+/db/*.sqlite3
+/public/system/*
+/coverage/
+/spec/tmp/*
+**.orig
+rerun.txt
+pickle-email-*.html 
+.rvmrc
+/.rvmrc
+
+/config/application.yml
+/config/database.yml  
+
+# Ignore rake_tasks autocompletion for zsh 
+.rake_tasks~
+
+#ignore MAC OS files
+*.swp
+*~
+.project
+.DS_Store
+
+# ignore vendor/cache 
+vendor/cache
+
