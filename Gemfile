@@ -14,11 +14,15 @@ group :test do
 	gem "factory_girl_rails"
   gem "capybara"
   gem "guard-rspec"
+	gem 'growl'  
+	gem 'guard-spork', '1.2.0'
+	gem 'spork', '0.9.2'
 end  
 
 group :development do |variable|
 	gem "nifty-generators"
 	gem 'annotate', ">=2.5.0", require: false
+	gem 'rb-fsevent', '~> 0.9.1', require: false
 end
 
 
