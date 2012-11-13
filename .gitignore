@@ -23,7 +23,9 @@ pickle-email-*.html
 /.rvmrc
 
 /config/application.yml
+config/application.yml
 /config/database.yml  
+config/database.yml
 
 # Ignore rake_tasks autocompletion for zsh 
 .rake_tasks~
