@@ -18,4 +18,9 @@ Users development is based on http://ruby.railstutorial.org/book/ruby-on-rails-t
 User remember me and reset password based on http://railscasts.com/episodes/275-how-i-test
 Advanced Searches based on https://github.com/railscasts/111-advanced-search-form-revised
 Full-text search based on https://github.com/railscasts/343-full-text-search-in-postgresql
-Newsletter about new results in user-preferred searches is mine :-).
+Newsletter about new results in user-preferred searches is mine :-).         
+
+== To get started
+
+cp config/application.example.yml config/application.yml 
+cp config/database.example.yml config/database.yml
