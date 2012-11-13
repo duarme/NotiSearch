@@ -2,10 +2,24 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.8'
 
-# Bundle edge Rails instead:
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
+# PostgreSQL
+gem 'pg'
 
-gem 'sqlite3'
+gem "rspec-rails", :group => [:test, :development]
+group :test do
+  # Pretty printed test output
+  gem 'turn', require: false
+	gem 'sqlite3', '~> 1.3.5'  
+	gem "mocha" 
+	gem "factory_girl_rails"
+  gem "capybara"
+  gem "guard-rspec"
+end  
+
+group :development do |variable|
+	gem "nifty-generators"
+	gem 'annotate', ">=2.5.0", require: false
+end
 
 
 # Gems used only for assets and not required
