@@ -20,8 +20,8 @@ class User < ActiveRecord::Base
                     uniqueness: { case_sensitive: false }, 
                     format: {with: VALID_EMAIL_REGEX}
   validates :password, presence: true, 
-                       length: { minimum: 5 }, on: :create 
-  validates :password_confirmation, presence: true 
+                       length: { minimum: 5 },      on: :create 
+  validates :password_confirmation, presence: true, on: :create 
   
   def send_password_reset     
     generate_token(:password_reset_token)

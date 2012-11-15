@@ -92,7 +92,6 @@ describe User do
 
       describe "with a password that's too short" do
         before { user_on_create.password = user_on_create.password_confirmation = "a" * 4 }
-        
         it { should_not be_valid }
       end
       
