@@ -12,7 +12,8 @@
 require 'spec_helper'
 
 describe User do
-  let(:user) { create(:user) } 
+  let(:user) { create(:user) }
+  let(:user_on_create) { User.new(email: user.email, password: user.password, password_confirmation: user.password_confirmation) }
   subject { user }
   it { should respond_to(:email) } 
   it { should respond_to(:password_digest) }   
@@ -70,25 +71,34 @@ describe User do
   end  
   
   # User passwords
-  describe "when password is not present" do
-    before { user.password = user.password_confirmation = " " }
-    it { should_not be_valid }
-  end
-  
-  describe "when password doesn't match confirmation" do
-    before { user.password_confirmation = "mismatch" }
-    it { should_not be_valid }
-  end
-  
-  describe "when password confirmation is nil" do
-    before { user.password_confirmation = nil }
-    it { should_not be_valid }
-  end   
-  
-  describe "with a password that's too short" do
-    before { user.password = user.password_confirmation = "a" * 4 }
-    it { should_not be_valid }
-  end 
+
+    context "User on create" do
+      subject { user_on_create }
+      
+      describe "when password is not present" do
+        before { user_on_create.password = user.password_confirmation = " " }
+        it { should_not be_valid }
+      end
+
+      describe "when password doesn't match confirmation" do
+        before { user_on_create.password_confirmation = "mismatch" }
+        it { should_not be_valid }
+      end
+
+      describe "when password confirmation is nil" do
+        before { user_on_create.password_confirmation = nil }
+        it { should_not be_valid }
+      end   
+
+      describe "with a password that's too short" do
+        before { user_on_create.password = user_on_create.password_confirmation = "a" * 4 }
+        
+        it { should_not be_valid }
+      end
+      
+    end
+    
+
   
   describe "#send_password_reset" do
     
