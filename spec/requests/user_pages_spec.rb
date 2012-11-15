@@ -12,7 +12,7 @@ describe "User pages" do
     
   end                                                                   
   
-  describe "signup" do
+  describe "signup" do                                           
     before { visit signup_path }
     let(:submit)  { "Sign Up" }
     
