@@ -1,10 +1,24 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id              :integer          not null, primary key
+#  email           :string(255)      not null
+#  password_digest :string(255)
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#
+
 require 'spec_helper'
 
 describe User do
   let(:user) { create(:user) } 
   subject { user }
   it { should respond_to(:email) } 
-  it { should respond_to(:password_digest) }  
+  it { should respond_to(:password_digest) }   
+  it { should respond_to(:password) }
+  it { should respond_to(:password_confirmation) }   
+  it { should respond_to(:authenticate) }
   it { should be_valid }
   
   describe 'when email is not present'  do 
