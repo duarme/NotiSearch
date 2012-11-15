@@ -9,9 +9,8 @@
   </head>
   <body>
     <div id="container">
-      <div id="flash-messages">
-      <%= render :partial => "layouts/flash", :locals => {:flash => flash} %>
-      </div>
+      <div id="signin_status"><%= render partial: "layouts/login_status" %></div>
+      <div id="flash-messages"><%= render partial: "layouts/flash", locals: {:flash => flash} %></div>
       <%= yield %>
     </div>
   </body>

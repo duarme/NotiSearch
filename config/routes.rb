@@ -2,9 +2,12 @@ Notisearch::Application.routes.draw do
   
   # root :to => '/'
   
-  get "users/new"
+  # Users and Sessions
+  resources :users 
+  resources :sessions, only: [:new, :create, :destroy]
   match '/signup',  to: 'users#new'
-  resources :users
+  match '/signin',  to: 'sessions#new'
+  match '/signout', to: 'sessions#destroy', via: :dele
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
