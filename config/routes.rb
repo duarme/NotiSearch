@@ -1,6 +1,6 @@
 Notisearch::Application.routes.draw do
   
-  # root :to => '/'
+  root to: 'users#index'
   
   # Users and Sessions
   resources :users 

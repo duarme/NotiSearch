@@ -15,7 +15,7 @@ class UsersController < ApplicationController
     @user = User.new(params[:user])
     if @user.save
       session[:user_id] = @user.id
-      redirect_to users_url, notice: "Thank you for signing up!"   #TODO: redirect to root_path
+      redirect_to root_path, notice: "Thank you for signing up!" 
     else
       render "new"
     end
