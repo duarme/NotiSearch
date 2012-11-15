@@ -1,10 +1,13 @@
 Notisearch::Application.routes.draw do
   
+  get "password_resets/new"
+
   root to: 'users#index'
   
   # Users and Sessions
   resources :users 
   resources :sessions, only: [:new, :create, :destroy]
+  resources :password_resets
   match '/signup',  to: 'users#new'
   match '/signin',  to: 'sessions#new'
   match '/signout', to: 'sessions#destroy', via: :dele

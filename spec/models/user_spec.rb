@@ -88,6 +88,26 @@ describe User do
   describe "with a password that's too short" do
     before { user.password = user.password_confirmation = "a" * 4 }
     it { should_not be_valid }
+  end 
+  
+  describe "#send_password_reset" do
+    
+    it "generates a unique password_reset_token each time" do
+      user.send_password_reset
+      last_token = user.password_reset_token
+      user.send_password_reset
+      user.password_reset_token.should_not eq(last_token)
+    end                                                  
+    
+    it "saves the time the password reset was sent" do
+      user.send_password_reset
+      user.reload.password_reset_sent_at.should be_present
+    end                                                   
+    
+    it "delivers email to user" do
+      user.send_password_reset
+      last_email.to.should include(user.email)
+    end
   end
   
   # User#authenticate
