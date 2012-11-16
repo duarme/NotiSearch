@@ -37,7 +37,7 @@ a {
 
 #flash_notice, #flash_error, #flash_alert {
   padding: 5px 8px;
-  margin: 10px 0;
+  margin: 25px 0 10px 0;
 }
 
 #flash_notice {
