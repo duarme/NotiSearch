@@ -10,7 +10,9 @@ Users of this example app can perform and save advanced `Searches` on `Products`
 
 ### How it works
 
-The basic idea behind user-preferred searches new results is that the `Search` model has also a `notified_at` attribute with the timestamp of its last notification, so the `find_new_results` private method can filter products based on whether they were created or updated after the last notification. See Search#new_results.
+The basic idea behind user-preferred searches new results is that the `Search` model has also a `notified_at` attribute with the timestamp of its last notification, so the `find_new_results` private method can filter products based on whether they were created or updated after the last notification. See Search#new_results.       
+
+New search results for every search are searched periodically, see schedule.rb.
 
 
 ### To get started
@@ -22,6 +24,7 @@ cp config/database.example.yml config/database.yml
 ## Please note
 
 * There is no navigation bar, so you should navigate through resources using the address bar and RESTful actions, see routes.rb
+* Searches#index shows only the searches of the current user (this isn't ideal but was the simplest solution)
 * There is no authorization logic because isn't needed in an example app 
 * I chose PostgreSQL because I plan to add PostgreSQL full-text search in the future, but you can use whatever DB you prefer, just change the Gemfile and database.yml file accordingly.  
 

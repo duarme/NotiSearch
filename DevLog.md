@@ -31,7 +31,7 @@ gem install rb-fsevent (in @global gemset)
 - Mailer setup
 -- added proper code to setup gmail account in development.rb
 
-`rails generate mailer SearchNotifier new_search_results_for`   
+`rails generate mailer UserMailer new_search_results_for`   
 
 Notification is working, now I need to
 

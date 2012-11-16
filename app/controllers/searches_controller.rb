@@ -53,7 +53,7 @@ class SearchesController < ApplicationController
   end
   
   def notify_new_results
-    SearchNotifier.delay(queue: 'users-preferred-searches-new-results-newsletter').new_search_results_for(current_user)
+    UserMailer.delay(queue: 'users-preferred-searches-new-results-newsletter').new_search_results_for(current_user)
     redirect_to root_path
   end 
 

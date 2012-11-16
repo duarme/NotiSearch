@@ -11,10 +11,4 @@
 class Category < ActiveRecord::Base
   attr_accessible :name
   has_many :products  
-  
-  def self.search(keywords)
-    products = order(:name)
-    products = products.where("name like ?", "%#{keywords}%") if keywords.present?
-    products
-  end
 end

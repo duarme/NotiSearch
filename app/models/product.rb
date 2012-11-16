@@ -14,4 +14,10 @@
 class Product < ActiveRecord::Base
   attr_accessible :name, :category, :category_id, :price, :released_at 
   belongs_to :category 
+  
+  def self.search(keywords)
+    products = order(:name)
+    products = products.where("name like ?", "%#{keywords}%") if keywords.present?
+    products
+  end
 end

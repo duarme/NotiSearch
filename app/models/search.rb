@@ -13,7 +13,7 @@ class Search < ActiveRecord::Base
         # fetch users to be notified    
         searches = Search.select('DISTINCT searches.user_id, searches.notified_at').where(new_results_presence: true).order(:notified_at).limit(CONFIG[:max_daily_emails])
         # notify users 
-        searches.each {|s| SearchNotifier.delay(queue: 'searches-newsletters-delivering', priority: 1).new_search_results_for(s.user)}
+        searches.each {|s| UserMailer.delay(queue: 'searches-newsletters-delivering', priority: 1).new_search_results_for(s.user)}
       end
       handle_asynchronously :notify_new_results_by_mail, queue: 'searches-newsletters-processing', priority: 0
 
