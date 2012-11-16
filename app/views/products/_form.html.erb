@@ -1,0 +1,20 @@
+<%= form_for @product do |f| %>
+  <%= f.error_messages %>
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :category_id %><br />
+    <%= f.number_field :category_id %>
+  </p>
+  <p>
+    <%= f.label :price %><br />
+    <%= f.text_field :price %>
+  </p>
+  <p>
+    <%= f.label :released_at %><br />
+    <%= f.date_select :released_at %>
+  </p>
+  <p><%= f.submit %></p>
+<% end %>

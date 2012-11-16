@@ -1,5 +1,9 @@
 Notisearch::Application.routes.draw do
   
+  resources :categories
+
+  resources :products
+
   get "password_resets/new"
 
   root to: 'users#index'

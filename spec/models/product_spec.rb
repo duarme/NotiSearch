@@ -1,0 +1,20 @@
+# == Schema Information
+#
+# Table name: products
+#
+#  id          :integer          not null, primary key
+#  name        :string(255)
+#  category_id :integer
+#  price       :decimal(, )
+#  released_at :date
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#
+
+require File.dirname(__FILE__) + '/../spec_helper'
+
+describe Product do
+  it "should be valid" do
+    Product.new.should be_valid
+  end
+end

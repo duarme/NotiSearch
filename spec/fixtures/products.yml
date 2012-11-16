@@ -1,0 +1,24 @@
+# == Schema Information
+#
+# Table name: products
+#
+#  id          :integer          not null, primary key
+#  name        :string(255)
+#  category_id :integer
+#  price       :decimal(, )
+#  released_at :date
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#
+
+one:
+  name: MyString
+  category_id: 1
+  price: 9.99
+  released_at: 2012-11-16
+
+two:
+  name: MyString
+  category_id: 1
+  price: 9.99
+  released_at: 2012-11-16
