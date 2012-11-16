@@ -53,6 +53,6 @@ Notification is working, now I need to
 [add] writing `./config/schedule.rb'
 [done] wheneverized!   
 
-# remember to do RVM integration https://github.com/javan/whenever#rvm-integration
+* remember to do RVM integration https://github.com/javan/whenever#rvm-integration
 
 
