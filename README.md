@@ -1,7 +1,7 @@
 NotiSearch Example App
 =====================
 
-This is an example App that let its users perform advanced searches on products, save and subscribe to them to receive new results via email. (in development, see [DevLog.md](/files/DevLog.md).
+This is an example App that let its users perform advanced searches on products, save and subscribe to them to receive new results via email. (In development, see [DevLog.md](/files/DevLog.md).
 
 Overview
 --------
@@ -18,6 +18,12 @@ The basic idea behind user-preferred searches new results is that the `Search` m
 cp config/application.example.yml config/application.yml 
 cp config/database.example.yml config/database.yml
 
+
+## Please note
+
+* There is no navigation bar, so you should navigate through resources using the address bar and RESTful actions, see routes.rb
+* There is no authorization logic because isn't needed in an example app 
+* I chose PostgreSQL because I plan to add PostgreSQL full-text search in the future, but you can use whatever DB you prefer, just change the Gemfile and database.yml file accordingly.  
 
 Credits
 -------

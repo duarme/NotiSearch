@@ -1,0 +1,23 @@
+one:
+  user_id: 1
+  keywords: 
+  category_id: 1
+  min_price: 9.99
+  max_price: 9.99
+  saved: false
+  notify: false
+  notified_at: 2012-11-16 09:12:44
+  new_results_presence: false
+  new_results_checked_at: 2012-11-16 09:12:44
+
+two:
+  user_id: 1
+  keywords: 
+  category_id: 1
+  min_price: 9.99
+  max_price: 9.99
+  saved: false
+  notify: false
+  notified_at: 2012-11-16 09:12:44
+  new_results_presence: false
+  new_results_checked_at: 2012-11-16 09:12:44

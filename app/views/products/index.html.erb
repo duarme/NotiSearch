@@ -1,23 +1,14 @@
-<% title "Products" %>
+<%= title "Products" %>
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Category</th>
-    <th>Price</th>
-    <th>Released At</th>
-  </tr>
-  <% for product in @products %>
-    <tr>
-      <td><%= product.name %></td>
-      <td><%= product.category_id %></td>
-      <td><%= product.price %></td>
-      <td><%= product.released_at %></td>
-      <td><%= link_to "Show", product %></td>
-      <td><%= link_to "Edit", edit_product_path(product) %></td>
-      <td><%= link_to "Destroy", product, :confirm => 'Are you sure?', :method => :delete %></td>
-    </tr>
-  <% end %>
-</table>
+<%= form_tag products_path, method: :get do %>
+  <p>
+    <%= text_field_tag :search, params[:search] %>
+    <%= button_tag "Search", name: nil %>
+  </p>
+<% end %>
 
-<p><%= link_to "New Product", new_product_path %></p>
+<p><%= link_to "Advanced Search", new_search_path %></p>
+
+<div id="products">
+  <%= render @products %>
+</div>

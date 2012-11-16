@@ -44,7 +44,9 @@ Notification is working, now I need to
 -- notify them
 -- save a simple report 
 
-gem 'whenever', require: false
+`gem 'whenever', require: false`
+`bundle install` 
+`wheneverize`
 
 ➜  new-search-results-notifier[master] ✗ bundle exec wheneverize
 [add] writing `./config/schedule.rb'

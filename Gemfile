@@ -3,7 +3,11 @@ source 'https://rubygems.org'
 gem 'rails', '3.2.8'
 
 # PostgreSQL
-gem 'pg'
+gem 'pg' 
+
+# Delayed and recurring jobs
+gem 'delayed_job_active_record'
+gem 'whenever', require: false
 
 gem "rspec-rails", :group => [:test, :development]
 group :test do

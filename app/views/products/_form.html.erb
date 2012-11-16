@@ -6,7 +6,7 @@
   </p>
   <p>
     <%= f.label :category_id %><br />
-    <%= f.number_field :category_id %>
+    <%= f.collection_select(:category_id, Category.all, :id, :name, :prompt => true) %>
   </p>
   <p>
     <%= f.label :price %><br />

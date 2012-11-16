@@ -1,0 +1,2 @@
+$("#flash-messages").html('<%= j render :partial => "layouts/flash", :locals => {:flash => flash} -%>')
+$("#notify-toggle-<%=@search.id-%> a").html('<%= @search.notify ? "ON" : "OFF"-%>');

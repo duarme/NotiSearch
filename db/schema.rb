@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121116075344) do
+ActiveRecord::Schema.define(:version => 20121116081245) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -26,6 +26,21 @@ ActiveRecord::Schema.define(:version => 20121116075344) do
     t.date     "released_at"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+  end
+
+  create_table "searches", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "keywords"
+    t.integer  "category_id"
+    t.decimal  "min_price"
+    t.decimal  "max_price"
+    t.boolean  "saved",                  :default => false
+    t.boolean  "notify",                 :default => false
+    t.datetime "notified_at"
+    t.boolean  "new_results_presence",   :default => false
+    t.datetime "new_results_checked_at"
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
   end
 
   create_table "users", :force => true do |t|
