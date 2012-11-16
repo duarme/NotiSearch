@@ -47,8 +47,8 @@ This will simply show you your `schedule.rb` file converted to cron syntax. It d
 Credits
 -------
 
-Users development is based on [Rails Tutorial by Michael Hartl](http://ruby.railstutorial.org/book/ruby-on-rails-tutorial#cha-modeling_users)
-User remember me and reset password based on [Railscast #275](http://railscasts.com/episodes/275-how-i-test)
-Advanced Searches based on [Railscast #111](https://github.com/railscasts/111-advanced-search-form-revised)
-Newsletter about new results in user-preferred searches is mine :-).                                       
+* Users development is based on [Rails Tutorial by Michael Hartl](http://ruby.railstutorial.org/book/ruby-on-rails-tutorial#cha-modeling_users)
+* User remember me and reset password based on [Railscast #275](http://railscasts.com/episodes/275-how-i-test)
+* Advanced Searches based on [Railscast #111](https://github.com/railscasts/111-advanced-search-form-revised)
+* Newsletter about new results in user-preferred searches is mine :-).                                       
 
