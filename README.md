@@ -1,7 +1,7 @@
 NotiSearch Example App
 =====================
 
-This is an example App that let its users perform advanced searches on products, save and subscribe to them to receive new results via email. (In development, see [DevLog.md](/files/DevLog.md).
+This is an example App that let its users perform advanced searches on products and then save and subscribe to them to receive new results via email. (In development, see [DevLog.md](/files/DevLog.md).
 
 Overview
 --------
@@ -19,34 +19,25 @@ To trigger a new results email notification you must first save a search for a u
 
 ### To get started
 
-`$ bundle install`
-`$ rails generate delayed_job:active_record`
-`$ rake db:migrate`
-`$ cp config/application.example.yml config/application.yml` 
-`$ cp config/database.example.yml config/database.yml`    
+* `$ bundle install`
+* `$ rails generate delayed_job:active_record`
+* `$ rake db:migrate`
+* `$ cp config/application.example.yml config/application.yml` 
+* `$ cp config/database.example.yml config/database.yml`    
 
 ## To run background and scheduled jobs 
-# The `whenever` command
+#### The `whenever` command
 ```sh
 $ whenever
 ```
 This will simply show you your `schedule.rb` file converted to cron syntax. It does not read or write your crontab file. Run `whenever --help` for a complete list of options.
 
-# To run whenever in development mode
-`$ whenever --set environment=development -w`    
+* Run whenever in development mode `$ whenever --set environment=development -w`    
+* See crontab `$ crontab -l`               
+* Clear crontab in development mode `$ whenever --set environment=development -c` 
+* Start background jobs `$ rake jobs:work` 
 
-# To see crontab
-`$ crontab -l`               
-
-# To clear crontab in development mode
-`$ whenever --set environment=development -c` 
-
-# To start background jobs
-`$ rake jobs:work` 
-
-
-
-# Please note
+### Please note
 
 * There is no navigation bar, so you should navigate through resources using the address bar and RESTful actions, see routes.rb
 * Searches#index shows only the searches of the current user (this isn't ideal but was the simplest solution)
