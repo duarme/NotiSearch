@@ -8,8 +8,8 @@ class ApplicationController < ActionController::Base
   end
   helper_method :current_user
 
-  # def authorize
-  #   redirect_to login_url, alert: "Not authorized" if current_user.nil?
-  # end     
+  def authenticate_user!
+    redirect_to signin_url, alert: "Please sign in" if current_user.nil?
+  end     
   
 end

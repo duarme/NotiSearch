@@ -29,7 +29,10 @@ class UserMailer < ActionMailer::Base
   def new_result_sets_for(searches)
     new_result_sets = Hash.new
     searches.each do |s|
-        new_result_sets[s] = s.new_results if s.new_results.count > 0 
+      # If a search has never been notified before, since notified_at is nil, 
+      # the time_reference is the search created_at attribute. 
+      tr = s.notified_at ? s.notified_at : s.created_at
+      new_result_sets[s] = s.new_results(tr) if s.new_results(tr).count > 0 
     end
     return new_result_sets
   end  
@@ -40,6 +43,6 @@ class UserMailer < ActionMailer::Base
   
   def touch_notified_at_for(result_set)
     # PERFORMANCE improvable via single SQL update query just after this block
-    result_set.each_key {|s| s.touch(:notified_at) }      
+    result_set.each_key {|s| s.notified! }      
   end
 end

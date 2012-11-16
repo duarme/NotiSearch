@@ -7,7 +7,7 @@
 #
 set :output, "#{path}/log/cron.log"
 
-case Rails.env
+case @environment
 
 when "production" 
   

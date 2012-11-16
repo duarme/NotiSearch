@@ -1,6 +1,7 @@
 TODO
 ==== 
 
+- Mail body
 - give user the possibility to define notification delay (deliver if last_send + delay < Time.now) 
 - performance optimization
 - Full-text search based on [Railscast #343](https://github.com/railscasts/343-full-text-search-in-postgresql) 

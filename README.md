@@ -12,16 +12,41 @@ Users of this example app can perform and save advanced `Searches` on `Products`
 
 The basic idea behind user-preferred searches new results is that the `Search` model has also a `notified_at` attribute with the timestamp of its last notification, so the `find_new_results` private method can filter products based on whether they were created or updated after the last notification. See Search#new_results.       
 
-New search results for every search are searched periodically, see schedule.rb.
+New search results for every search are searched periodically, see schedule.rb.  
+
+To trigger a new results email notification you must first save a search for a user, then activate the notification for that search and then create or update a matching product.
 
 
 ### To get started
 
-cp config/application.example.yml config/application.yml 
-cp config/database.example.yml config/database.yml
+`$ bundle install`
+`$ rails generate delayed_job:active_record`
+`$ rake db:migrate`
+`$ cp config/application.example.yml config/application.yml` 
+`$ cp config/database.example.yml config/database.yml`    
+
+## To run background and scheduled jobs 
+# The `whenever` command
+```sh
+$ whenever
+```
+This will simply show you your `schedule.rb` file converted to cron syntax. It does not read or write your crontab file. Run `whenever --help` for a complete list of options.
+
+# To run whenever in development mode
+`$ whenever --set environment=development -w`    
+
+# To see crontab
+`$ crontab -l`               
+
+# To clear crontab in development mode
+`$ whenever --set environment=development -c` 
+
+# To start background jobs
+`$ rake jobs:work` 
 
 
-## Please note
+
+# Please note
 
 * There is no navigation bar, so you should navigate through resources using the address bar and RESTful actions, see routes.rb
 * Searches#index shows only the searches of the current user (this isn't ideal but was the simplest solution)
