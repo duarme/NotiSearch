@@ -18,6 +18,5 @@ FactoryGirl.define do
   
   factory :search do
     user
-    category
   end  
 end
