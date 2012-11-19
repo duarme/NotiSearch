@@ -5,14 +5,14 @@ FactoryGirl.define do
     password_confirmation "secret"
   end   
   
-  # factory :category do
-  #   sequence(:name) { |n| "category name #{n}"}
-  # end 
-  # 
-  # factory :product do
-  #   sequence(:name) { |n| "product name #{n}"}
-  #   category
-  #   # price { 1 + rand(9) }  
-  #   # released_at { Time.now - rand(20).days }
-  # end     
+  factory :category do
+    sequence(:name) { |n| "category name #{n}"}
+  end 
+  
+  factory :product do
+    sequence(:name) { |n| "product name #{n}"}
+    category
+    price { 1 + rand(9) }  
+    released_at { Time.now - rand(20).days }
+  end    
 end
