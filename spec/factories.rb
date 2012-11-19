@@ -12,7 +12,12 @@ FactoryGirl.define do
   factory :product do
     sequence(:name) { |n| "product name #{n}"}
     category
-    price { 1 + rand(9) }  
+    price { 100 + rand(1000001) }  
     released_at { Time.now - rand(20).days }
-  end    
+  end   
+  
+  factory :search do
+    user
+    category
+  end  
 end

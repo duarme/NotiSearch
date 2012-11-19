@@ -13,7 +13,7 @@ gem "rspec-rails", :group => [:test, :development]
 group :test do
   # Pretty printed test output
   gem 'turn', require: false
-	gem 'sqlite3', '~> 1.3.5'  
+	# gem 'sqlite3', '~> 1.3.5'  
 	# gem "mocha" 
 	gem "factory_girl_rails"
   gem "capybara"

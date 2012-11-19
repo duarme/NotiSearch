@@ -17,10 +17,32 @@
 #  updated_at             :datetime         not null
 #
 
-# require File.dirname(__FILE__) + '/../spec_helper'
-# 
-# describe Search do
-#   it "should be valid" do
-#     Search.new.should be_valid
-#   end
-# end   
+require 'spec_helper'
+
+describe Search do 
+  let (:user)             { create(:user) }
+  let (:searched_cat)     { create(:category, name: "searched category")}
+  let (:searched_prod)    { create(:product, category_id: searched_cat.id, name: 'generic guitar')}
+  let (:search)           { create(:search, user: user, 
+                                            keywords:"guitar", 
+                                            category_id: searched_cat.id, 
+                                            min_price: 1000, max_price: 2000) }
+  
+  subject{ search }
+  it { should respond_to(:keywords) }
+  it { should respond_to(:category_id) } 
+  it { should respond_to(:min_price) }   
+  it { should respond_to(:max_price) }
+  
+  it { should respond_to(:products) }
+  
+  
+  describe "searched products" do
+    subject { search.products }
+    
+    describe "when keywords include a match" do
+      it { should include(searched_prod) }    
+    end
+  end
+   
+end  

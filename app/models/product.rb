@@ -5,7 +5,7 @@
 #  id          :integer          not null, primary key
 #  name        :string(255)
 #  category_id :integer
-#  price       :decimal(, )
+#  price       :integer
 #  released_at :date
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
