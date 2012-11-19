@@ -75,7 +75,20 @@ class Search < ActiveRecord::Base
     self.update_attributes(notified_at: now, new_results_presence: false, new_results_checked_at: now)    
   end
   
+  def set_keywords(keywords)
+    @products = nil
+    self.keywords = keywords
+  end
+  
   private
+    
+    def find_products
+      products = keywords.present? ? Product.search(keywords, self.user.language) : Product.order(:name) 
+      # products = products.where(category_id: category_id) if category_id.present?
+      # products = products.where("price >= ?", min_price) if min_price.present?
+      # products = products.where("price <= ?", max_price) if max_price.present?  
+      products
+    end
   
     def find_new_results(time_reference)
       new_result_products = products.where("updated_at >= ?", time_reference)
@@ -84,16 +97,6 @@ class Search < ActiveRecord::Base
       # only after the new search results are notified by mail is set back to false calling Search#notified!
       self.update_attributes(new_results_presence: new_result_products.any?, new_results_checked_at: Time.now) unless new_results_presence 
       return new_result_products
-    end 
-    
-
-    def find_products
-      products = Product.order(:name)
-      products = products.where("name iLIKE ?", "%#{keywords}%") if keywords.present?
-      products = products.where(category_id: category_id) if category_id.present?
-      products = products.where("price >= ?", min_price) if min_price.present?
-      products = products.where("price <= ?", max_price) if max_price.present?
-      products
     end  
 
     def find_recent_new_results

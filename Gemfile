@@ -43,7 +43,10 @@ end
 gem 'jquery-rails'
 
 # To use ActiveModel has_secure_password
-gem 'bcrypt-ruby', '~> 3.0.0'
+gem 'bcrypt-ruby', '~> 3.0.0'       
+
+# gem 'texticle', require: 'texticle/rails' 
+gem 'pg_search'
 
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'

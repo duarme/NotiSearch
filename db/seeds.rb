@@ -32,4 +32,11 @@ Product.create!(category: Category.find_or_create_by_name("Toys & Games"), name:
 Product.create!(category: Category.find_or_create_by_name("Toys & Games"), name: "Unicorn Action Figure", price: 875, released_at: "2011-09-25")
 Product.create!(category: Category.find_or_create_by_name("Hardware"), name: "Rack", price: 3249, released_at: "2011-09-28")
 Product.create!(category: Category.find_or_create_by_name("Toys & Games"), name: "Model Train Rails", price: 4500, released_at: "2011-10-01")
-Product.create!(category: Category.find_or_create_by_name("Electronics"), name: "CanCan Music Record", price: 299, released_at: "2011-10-04")
+Product.create!(category: Category.find_or_create_by_name("Electronics"), name: "CanCan Music Record", price: 299, released_at: "2011-10-04") 
+
+User.create!(email: "prova@example.com", password: "secret", password_confirmation: "secret")
+
+Product.all.each do |p|
+  p.description = "#{p.name} "*5
+  p.save
+end

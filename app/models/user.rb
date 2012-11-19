@@ -9,6 +9,7 @@
 #  updated_at             :datetime         not null
 #  password_reset_token   :string(255)
 #  password_reset_sent_at :datetime
+#  language               :string(255)
 #
 
 class User < ActiveRecord::Base

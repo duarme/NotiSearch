@@ -98,6 +98,9 @@ GEM
     nifty-generators (0.4.6)
     nokogiri (1.5.5)
     pg (0.14.1)
+    pg_search (0.5.7)
+      activerecord (>= 3)
+      activesupport (>= 3)
     polyglot (0.3.3)
     pry (0.9.10)
       coderay (~> 1.0.5)
@@ -192,6 +195,7 @@ DEPENDENCIES
   jquery-rails
   nifty-generators
   pg
+  pg_search
   rails (= 3.2.8)
   rb-fsevent (~> 0.9.1)
   rspec-rails

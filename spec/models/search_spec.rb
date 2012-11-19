@@ -22,166 +22,207 @@ require 'spec_helper'
 describe Search do 
   let (:user)             { create(:user) }
   let (:searched_cat)     { create(:category, name: "searched category")}
-  let (:searched_prod)    { create(:product, category_id: searched_cat.id, 
+  let (:product)          { create(:product, category_id: searched_cat.id, 
                                              name: 'Generic Guitar match ', 
                                              price: 150000)}
-  let (:search)           { create(:search, user: user) }
+  let (:search)           { create(:search) }
   
   subject{ search }
   it { should respond_to(:keywords) }
   it { should respond_to(:category_id) } 
   it { should respond_to(:min_price) }   
-  it { should respond_to(:max_price) }
+  it { should respond_to(:max_price) } 
+  it { should respond_to(:user) }
   
-  it { should respond_to(:products) }
+  it { should respond_to(:products) } 
   
   
-  describe "searched products" do
+  describe "resultset" do
     subject { search.products }
+     
+    
+    context "full-text search in product name and description" do
+      describe "when matching terms are only in the description" do 
+        let(:product) { create(:product, name: 'anything', description: "matching description")}
+        let(:search) { create(:search, keywords: "matching description") }
+        it { should include(product) } 
+      end
+    end  
+    
+    context "ranking" do    
+      
+      describe "product name has a higher weight than product description" do
+        let!(:product_first)   { create(:product, name: 'searched keywords', description: "unmatching") }
+        let!(:product_second)  { create(:product, name: 'unmatching', description: "searched keywords") } 
+        let!(:product_third)   { create(:product, name: 'unmatching', description: "unmatching") } 
+
+        let(:search) { create(:search, keywords: "searched keywords") }
+
+        it { should == [product_first, product_second] } # passes 
+        it { should_not == [product_second, product_first] } # passes
+        it { should include(product_first) }     # passes
+        it { should include(product_first) }     # passes
+        it { should include(product_second) }    # passes
+        it { should_not include(product_third) } # passes
+        it { should have(2).items }   # passes
+      end                                      
+      
+      # describe "should include product with matching name first than the one with matching description" do
+      #   let(:product_first)   { create(:product, name: 'matching', description: "unmatching") }
+      #   let(:product_second)  { create(:product, name: 'unmatching', description: "matching") } 
+      #   let(:product_third)   { create(:product, name: 'unmatching', description: "unmatching") } 
+      #   let(:search) { create(:search, keywords: "matching") } 
+      # 
+      #   it { puts search.products.inspect }
+      # end           
+      
+    end
+    
     
     describe "when matching keywords are" do
       
       describe "unmatching" do
-        before { search.keywords = "unmatch"} 
-        it { should_not include(searched_prod) }
+        let(:search) { create(:search , keywords: "unmatch") } 
+        it { should_not include(product) }
       end
       
       describe "blank" do
-        before { search.keywords = "" }
-        it { should include(searched_prod) }
-      end
+        let(:search) { create(:search , keywords: "") } 
+        it { should include(product) }
+      end  
       
       describe "exact match" do
-        before { search.keywords = "Generic Guitar match"}
-        it { should include(searched_prod) }
-      end
+        let(:search) { create(:search , keywords: "Generic Guitar match") }
+        it { should include(product) }
+      end 
       
       describe "phrase match" do
-        before { search.keywords = "Generic Guitar"}
-        it { should include(searched_prod) }
-        before { search.keywords = "Guitar match"}
-        it { should include(searched_prod) }
+        let(:search) { create(:search , keywords: "Generic Guitar") }
+        it { should include(product) }
+        let(:search) { create(:search , keywords: "Guitar match") }
+        it { should include(product) }
       end
-      
-      describe "simple" do 
-        before { search.keywords = "match"}
-        it { should include(searched_prod) } 
-      end 
-      
-      describe "multiple and adiacent" do
-        before { search.keywords = "generic guitar" }
-        it { should include(searched_prod) }
-      end
-      
-      describe "multiple and unadiacent" do
-        before { search.keywords = "generic match" }
-        it { should include(searched_prod) }
-      end
-      
-      describe "a substring" do
-        before { search.keywords = "guit"}
-        it { should include(searched_prod) }
-      end
-      
-      describe "case unsensitive" do 
-        before { search.keywords = "generic guitar match"}
-        it { should include(searched_prod) }
-        before { search.keywords = "guitar"}
-        it { should include(searched_prod) }
-        before { search.keywords = "GUITAR"}
-        it { should include(searched_prod) }
-        before { search.keywords = "gENERIC"}
-        it { should include(searched_prod) }
-        before { search.keywords = "mAtCh"}
-        it { should include(searched_prod) }
-      end    
-      
-      describe "the plural of an exact match" do
-        before { search.keywords = "matches" }
-        it { should include(searched_prod) }
-      end
-      
-      describe "the singular of an exact match" do
-        before do
-          searched_prod.name = "Generic Guitar matches"
-          search.keywords = "match"
-        end    
-        it { should include(searched_prod) }
-      end 
-      
-      describe "the irregular plural of an exact match" do
-        before do
-          searched_prod.name = "Generic Guitar child"
-          search.keywords = "children"
-        end
-        it { should include(searched_prod) }
 
-        before do
-          searched_prod.name = "Generic Guitar baby"
-          search.keywords = "babies"
-        end
-        it { should include(searched_prod) }
-      end
+      describe "simple" do 
+        let(:product) { create(:product, name: "Ibanez Paul Gilbert Guitar") }
+        let(:search)  { create(:search , keywords: "ibanez paul gilbert") }
+        it { should include(product) } 
+      end  
+
+      describe "multiple and adiacent" do
+        let(:search) { create(:search , keywords: "generic guitar") }
+        it { should include(product) }
+      end   
+           
+      describe "multiple and unadiacent" do
+        let(:search) { create(:search , keywords: "generic match") }
+        it { should include(product) }
+      end       
+
+      describe "case unsensitive" do 
+        let(:search) { create(:search , keywords: "generic guitar match") }
+        it { should include(product) }
+        let(:search) { create(:search , keywords: "guitar") }
+        it { should include(product) }
+        let(:search) { create(:search , keywords: "GUITAR") }
+        it { should include(product) }
+        let(:search) { create(:search , keywords: "gENERIC") }
+        it { should include(product) }
+        let(:search) { create(:search , keywords: "mAtCh") }
+        it { should include(product) }
+      end    
+          
+      describe "the plural of an exact match" do
+        let(:search) { create(:search , keywords: "matches") }
+        it { should include(product) }
+      end       
+            
+      describe "the singular of an exact match" do
+        let(:product) { create(:product, name: "Generic Guitar matches") }
+        let(:search)  { create(:search , keywords: "match") }
+        it { should include(product) }
+      end  
+            
+      describe "the irregular plural of an exact match" do
+        let(:product) { create(:product, name: "Guitar for a Child") }
+        let(:search)  { create(:search , keywords: "guitar for children") }
+        it { should include(product) }   
       
+        let(:product) { create(:product, name: "Generic Guitar baby") }
+        let(:search)  { create(:search , keywords: "babies") }
+        it { should include(product) }
+      
+        let(:product) { create(:product, name: "Generic Guitar character") }
+        let(:search)  { create(:search , keywords: "characters") }
+        it { should include(product) }
+      
+        let(:product) { create(:product, name: "Generic Guitar hero") }
+        let(:search)  { create(:search , keywords: "heroes") }
+        it { should include(product) }
+      end  
+             
       describe "the irregular singular of an exact match" do 
-        
-        before do
-          searched_prod.name = "Generic Guitar children"
-          search.keywords = "child"
-        end    
-        it { should include(searched_prod) } 
+        let(:product) { create(:product, name: "Generic Guitar children") }
+        let(:search)  { create(:search , keywords: "child") }
+        it { should include(product) } 
       
-        before do
-          searched_prod.name = "Generic Guitar babies"
-          search.keywords = "baby"
-        end    
-        it { should include(searched_prod) } 
-        
-      end
+        let(:product) { create(:product, name: "Generic Guitar babies") }
+        let(:search)  { create(:search , keywords: "baby") }
+        it { should include(product) } 
       
-     
+        let(:product) { create(:product, name: "Generic Guitar characters") }
+        let(:search)  { create(:search , keywords: "character") }
+        it { should include(product) }
+      
+        let(:product) { create(:product, name: "Generic Guitar heroes") }
+        let(:search)  { create(:search , keywords: "hero") }
+        it { should include(product) }
+      end    
+
+      describe "including stopwords" do
+        let(:product) { create(:product, name: "Generic Guitar Hero") }   
+        let(:unmatching_product) { create(:product, name: "unmatching product") }
+        let(:search)  { create(:search , keywords: "generic guitar of a hero") }
+        it { should include(product) } 
+        it { should_not include(unmatching_product) }
+      end     
+      
       describe "the plural of an exact match in Italian" do
-        before do
-          searched_prod.name = "chitarra generica"
-          search.keywords = "chitarre"
-        end
-        it { should include(searched_prod) }
-      end
+        let(:product) { create(:product, name: "chitarra generica") } 
+        let(:user)    { create(:user, language: "italian") }
+        let(:search)  { create(:search, user: user, keywords: "chitarre") }
+        it { should include(product) }
+      end  
       
-      describe "the singular of an exact match in Italian" do
-        before do
-          searched_prod.name = "chitarre generiche"
-          search.keywords = "chitarra"
-        end    
-        it { should include(searched_prod) }
+      describe "the singular of an exact match in Italian" do 
+        let(:product) { create(:product, name: "chitarre generiche") }
+        let(:user)    { create(:user, language: "italian") }
+        let(:search)  { create(:search, user: user, keywords: "chitarra") }
+        it { should include(product) }
       end 
       
-      describe "multiple plural of an exact match in Italian" do
-        before do
-          searched_prod.name = "chitarra generica"
-          search.keywords = "chitarre generiche"
-        end
-        it { should include(searched_prod) }
+      describe "multiple plural of an exact match in Italian" do  
+        let(:product) { create(:product, name: "chitarra generica") }
+        let(:user)    { create(:user, language: "italian") }
+        let(:search)  { create(:search, user: user, keywords: "chitarre generiche") }
+        it { should include(product) }
       end
       
       describe "multiple singular of an exact match in Italian" do
-        before do
-          searched_prod.name = "chitarre generiche"
-          search.keywords = "chitarra generica"
-        end    
-        it { should include(searched_prod) }
+        let(:product) { create(:product, name: "chitarre generiche") } 
+        let(:user)    { create(:user, language: "italian") }
+        let(:search)  { create(:search, user: user, keywords: "chitarra generica") }
+        it { should include(product) }
       end
       
       describe "plural and singular of an exact match in Italian" do
-        before do
-          searched_prod.name = "chitarre generica"
-          search.keywords = "chitarra generiche"
-        end    
-        it { should include(searched_prod) }
-      end
-          
+        let(:product) { create(:product, name: "chitarre generiche") }
+        let(:user)    { create(:user, language: "italian") }
+        let(:search)  { create(:search, user: user, keywords: "chitarra generiche") }
+        it { should include(product) }
+      end     
+      
     end 
-     
     
   end
    
