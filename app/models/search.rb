@@ -26,8 +26,8 @@ class Search < ActiveRecord::Base
     # Checks new results presence to be notified only for serches with notify: true, new_results_presence: false
     def check_new_results_presence
       searches = Search.where(notify: true).where(new_results_presence: false).order(:new_results_checked_at).limit(CONFIG[:number_of_searches_to_be_checked_for_new_results])
-      # for each searches checks new results since last check
-      searches.each {|s| s.new_results(s.new_results_checked_at)}
+      # for each search checks new results since last check
+      searches.each {|s| s.new_results(s.new_results_checked_at ? s.new_results_checked_at : s.updated_at)}
     end
     handle_asynchronously :check_new_results_presence, queue: 'searches-check-new-results-presence', priority: 5
 
@@ -83,10 +83,10 @@ class Search < ActiveRecord::Base
   private
     
     def find_products
-      products = keywords.present? ? Product.search(keywords, self.user.language) : Product.order(:name) 
-      # products = products.where(category_id: category_id) if category_id.present?
-      # products = products.where("price >= ?", min_price) if min_price.present?
-      # products = products.where("price <= ?", max_price) if max_price.present?  
+      products = keywords.present? ? Product.advanced_search(keywords, self.user.language) : Product.order(:name) 
+      products = products.where(category_id: category_id) if category_id.present?
+      products = products.where("price >= ?", min_price) if min_price.present?
+      products = products.where("price <= ?", max_price) if max_price.present?  
       products
     end
   

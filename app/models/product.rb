@@ -22,12 +22,11 @@ class Product < ActiveRecord::Base
   #   # ignoring: :accents    
     
 
-
-  def self.search(query, dictionary = "english")
+  def self.advanced_search(query, dictionary = "english")  
     if query.present? 
       rank = <<-RANK 
         ts_rank(to_tsvector('#{dictionary}', name), plainto_tsquery('#{dictionary}', #{sanitize(query)})) +
-        ts_rank(to_tsvector('#{dictionary}', description), plainto_tsquery('#{dictionary}', #{sanitize(query)}))  
+        ts_rank(to_tsvector('#{dictionary}', description), plainto_tsquery('#{dictionary}', #{sanitize(query)}))*0.7  
       RANK
       where("to_tsvector('#{dictionary}', name) @@ plainto_tsquery('#{dictionary}', :q) OR to_tsvector('#{dictionary}', description) @@ plainto_tsquery('#{dictionary}', :q)", q: query).order("#{rank} desc")
     else

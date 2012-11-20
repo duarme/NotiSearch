@@ -38,46 +38,7 @@ describe Search do
   
   
   describe "resultset" do
-    subject { search.products }
-     
-    
-    context "full-text search in product name and description" do
-      describe "when matching terms are only in the description" do 
-        let(:product) { create(:product, name: 'anything', description: "matching description")}
-        let(:search) { create(:search, keywords: "matching description") }
-        it { should include(product) } 
-      end
-    end  
-    
-    context "ranking" do    
-      
-      describe "product name has a higher weight than product description" do
-        let!(:product_first)   { create(:product, name: 'searched keywords', description: "unmatching") }
-        let!(:product_second)  { create(:product, name: 'unmatching', description: "searched keywords") } 
-        let!(:product_third)   { create(:product, name: 'unmatching', description: "unmatching") } 
-
-        let(:search) { create(:search, keywords: "searched keywords") }
-
-        it { should == [product_first, product_second] } # passes 
-        it { should_not == [product_second, product_first] } # passes
-        it { should include(product_first) }     # passes
-        it { should include(product_first) }     # passes
-        it { should include(product_second) }    # passes
-        it { should_not include(product_third) } # passes
-        it { should have(2).items }   # passes
-      end                                      
-      
-      # describe "should include product with matching name first than the one with matching description" do
-      #   let(:product_first)   { create(:product, name: 'matching', description: "unmatching") }
-      #   let(:product_second)  { create(:product, name: 'unmatching', description: "matching") } 
-      #   let(:product_third)   { create(:product, name: 'unmatching', description: "unmatching") } 
-      #   let(:search) { create(:search, keywords: "matching") } 
-      # 
-      #   it { puts search.products.inspect }
-      # end           
-      
-    end
-    
+    subject { search.products } 
     
     describe "when matching keywords are" do
       
@@ -222,7 +183,59 @@ describe Search do
         it { should include(product) }
       end     
       
-    end 
+    end
+    
+    context "full-text search in product name and description" do
+       describe "when matching terms are only in the description" do 
+         let(:product) { create(:product, name: 'anything', description: "matching description")}
+         let(:search) { create(:search, keywords: "matching description") }
+         it { should include(product) } 
+       end
+     end  
+
+     context "ranking" do    
+
+       describe "when product name has a higher weight than product description" do
+         let!(:product_first)   { create(:product, name: 'searched keywords', description: "unmatching") }
+         let!(:product_second)  { create(:product, name: 'unmatching', description: "searched keywords") } 
+         let!(:product_third)   { create(:product, name: 'unmatching', description: "unmatching") } 
+
+         let(:search) { create(:search, keywords: "searched keywords") }
+
+         it { should have(2).results }
+         it { should_not == [product_second, product_first] }
+         it { should == [product_first, product_second] }
+         it { should include(product_first) }     
+         it { should include(product_first) }   
+         it { should include(product_second) }    
+         it { should_not include(product_third) }   
+       end                                      
+
+       describe "should order product by ranking" do 
+         let!(:product_third)   { create(:product, name: 'product name unmatching', description: "product description matching") }
+         let!(:product_first)   { create(:product, name: 'product name matching',   description: "product description matching") }
+         let!(:product_second)  { create(:product, name: 'product name matching',   description: "product description unmatching") } 
+
+         let!(:search) { create(:search, keywords: "matching") } 
+
+         it { should have(3).results}  
+         it { should_not == [product_third, product_first, product_second] } 
+         it { should == [product_first, product_second, product_third] } 
+       end
+
+       describe "should order product by ranking #2" do 
+         let!(:product_third)   { create(:product, name: 'product name unmatching', description: "matching product matching description matching") }
+         let!(:product_first)   { create(:product, name: 'product name matching',   description: "product description matching") }
+         let!(:product_second)  { create(:product, name: 'product name matching',   description: "product description unmatching") } 
+
+         let!(:search) { create(:search, keywords: "matching") } 
+
+         it { should have(3).results}  
+         it { should_not == [product_third, product_first, product_second] } 
+         it { should == [product_first, product_second, product_third] } 
+       end           
+
+     end 
     
   end
    

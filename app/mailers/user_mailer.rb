@@ -17,8 +17,7 @@ class UserMailer < ActionMailer::Base
     
     touch_notified_at_for(@new_result_sets) # PERFORMANCE maybe improvable moving this in an after callback
        
-    mail to: @user.email, subject:  "[SEARCH_NOTIFIER] There are #{new_results_count} new results for " + 
-                                    "#{@new_result_sets.size} of your preferred Searches"
+    mail to: @user.email, subject: subject_content 
   end
   
   private
@@ -32,17 +31,26 @@ class UserMailer < ActionMailer::Base
       # If a search has never been notified before, since notified_at is nil, 
       # the time_reference is the search created_at attribute. 
       tr = s.notified_at ? s.notified_at : s.created_at
-      new_result_sets[s] = s.new_results(tr) if s.new_results(tr).count > 0 
+      new_result_sets[s] = s.new_results(tr) if s.notify && s.new_results(tr).count > 0 
     end
     return new_result_sets
   end  
   
   def new_results_count
-    @new_result_sets.any? ? @new_result_sets.map{|s, r| r.count}.inject(:+) : "no"
+    @new_result_sets.any? ? @new_result_sets.map{|s, r| r.count}.inject(:+) : 0
   end
   
   def touch_notified_at_for(result_set)
     # PERFORMANCE improvable via single SQL update query just after this block
     result_set.each_key {|s| s.notified! }      
+  end 
+  
+  def subject_content
+    sc = "[NotiSearch] "
+    if new_results_count > 0
+      sc += "There #{new_results_count > 1 ? 'are' : 'is'} #{new_results_count} new #{(new_results_count > 1 ? 'results' : 'result')} for #{@new_result_sets.size} of your preferred searches" 
+    else
+      "There are no new results for any of your preferred searches"
+    end
   end
 end

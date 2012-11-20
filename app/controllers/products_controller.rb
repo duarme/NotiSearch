@@ -1,6 +1,6 @@
 class ProductsController < ApplicationController
   def index
-    @products = Product.search(params[:search])
+    @products = Product.advanced_search(params[:search])
   end
 
   def show
