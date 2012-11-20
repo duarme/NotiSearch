@@ -1,0 +1,12 @@
+The following new results are available for your subscribed searches:
+
+----------------------------------------------------
+<% @new_result_sets.each do |search, new_results| %> 
+New results for Search "<%= search.keywords %>":
+----------------------------------------------------
+<% new_results.each do |p| %>
+  <%= "#{p.name}\n" -%>
+....................................................
+<% end %>
+----------------------------------------------------
+<% end %>                                                

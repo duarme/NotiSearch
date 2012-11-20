@@ -59,13 +59,13 @@ describe Search do
       context "when there are new results to be notified" do 
 
         before do
-          product_one = Product.create!(name: "matching") 
-          product_two = Product.create!(name: "matching") 
-          product_tre = Product.create!(name: "matching") 
+          product_one = Product.create!(name: "Matching Product one") 
+          product_two = Product.create!(name: "Matching Product Two") 
+          product_tre = Product.create!(name: "Matching Product Three") 
           
           other_search = @user.searches.create!(notify: true, saved: true, keywords: "othermatch") 
-          product_four = Product.create!(name: "othermatch")
-          product_five = Product.create!(name: "othermatch")
+          product_four = Product.create!(name: "Product four with othermatch")
+          product_five = Product.create!(name: "Product five with othermatch")
           
           Search.check_new_results_presence
           successes, failures = Delayed::Worker.new.work_off
@@ -81,7 +81,7 @@ describe Search do
         it "should notify the new results to the user" do              
           last_email.to.should include(@user.email)
           last_email.subject.should match("There are 5 new results for 2 of your preferred searches")   
-        end     
+        end    
 
     end
   
