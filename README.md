@@ -75,6 +75,6 @@ Credits
 
 #### Acknowledgements
 
-* Ryan Bates for replying with useful hints to my emails and, of course, for running Railscasts.com.
-* Leo Correa <a href="http://stackoverflow.com/questions/13313504/rails-simple-newsletter-mailing-list-with-notification-of-new-search-results-v">his answer</a> on Stackoverflow.                                       
+* Ryan Bates for replying with useful hints to my email and, of course, for running Railscasts.com.
+* Leo Correa for <a href="http://stackoverflow.com/questions/13313504/rails-simple-newsletter-mailing-list-with-notification-of-new-search-results-v">his answer</a> on Stackoverflow.                                       
 
