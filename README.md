@@ -1,12 +1,12 @@
 NotiSearch Example App
 =====================
 
-This is an example App that let its users perform advanced searches on products and then save and subscribe to them to receive new results via email.
+This Example App allows its users to perform advanced searches, save them and subscribe to receive new search results via email.
 
 Overview
 --------
 
-Users of this example app can perform and save advanced `Searches` on `Products`. Than they can subscribe to their preferred (saved) searches in order to receive an email notification whenever new search results are available for that particular search (like on Yahoo answers).
+Users of this example app can perform and save advanced `Searches` on `Products`. Than they can subscribe to their preferred (saved) searches in order to receive an email notification when new search results are available for that particular search (like on Yahoo answers).
 
 ### How it works
 
