@@ -58,11 +58,11 @@ This will simply show you your `schedule.rb` file converted to cron syntax. It d
 
 ### Please note
 
-* There is no navigation bar, so you should navigate through resources using the address bar and RESTful actions, see routes.rb
+* There is no navigation links yet, so you should navigate through resources using the address bar and RESTful actions, see routes.rb
 * Searches#index shows only the searches of the current user (this isn't ideal but was the simplest solution)
 * There is no authorization logic because isn't needed in an example app 
 * It relies on PostgreSQL for full-text search.
-* This example app is.. well, just an example app, still in development (see DevLog.md), for a real production app you should consider *a lot* of performance optimization and be ready to scale to a solution based, for instance, on <a href="https://github.com/bvandenbos/resque-scheduler">Resque Scheduler</a> which has <a href="http://redis.io/">Redis</a> as an external dependency. 
+* This example app is.. well, just an *example app*, still in development (see <a href="https://github.com/duccioarmenise/NotiSearch/blob/master/DevLog.md">DevLog.md</a>), for a real production app you should consider *a lot* of performance optimization and be ready to scale to a solution based, for instance, on <a href="https://github.com/bvandenbos/resque-scheduler">Resque Scheduler</a> which has <a href="http://redis.io/">Redis</a> as an external dependency. 
 * Furthermore you should consider all the issues related to *mass emailing*, for instance Gmail is good for up to 200 emails/day (this is the reason for the `max_daily_emails: 200` in <a href="https://github.com/duccioarmenise/NotiSearch/blob/master/config/application.example.yml">`application.example.yml`</a> ). If you need to scale, possible alternatives to Gmail are [mailjet](http://www.mailjet.com/), [sendgrid](http://sendgrid.com/), and [mailchimp](http://mailchimp.com/).   
 
 Credits
@@ -71,7 +71,7 @@ Credits
 * Users development is based on [Rails Tutorial by Michael Hartl](http://ruby.railstutorial.org/book/ruby-on-rails-tutorial#cha-modeling_users)
 * User remember me and reset password based on [Railscast #275](http://railscasts.com/episodes/275-how-i-test)
 * Advanced Searches based on [Railscast #111](https://github.com/railscasts/111-advanced-search-form-revised)
-* Newsletter about new results in user-preferred searches by <a href="http://duccioarmenise.net" title="Duccio Armenise Web Developer">Duccio Armenise</a> (me) :-).
+* Newsletter about new results in user-preferred searches by <a href="http://duccioarmenise.net" title="Duccio Armenise Web Developer">Duccio Armenise</a> :-).
 
 #### Acknowledgements
 

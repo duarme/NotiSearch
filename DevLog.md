@@ -1,11 +1,10 @@
 TODO
 ==== 
 
-- Mail body
+- Navigation links
+- product descriptions view layer and seed data (since the app already supports full-text search on products name and description)
 - give user the possibility to define notification delay (deliver if last_send + delay < Time.now) 
 - performance optimization
-- Full-text search based on [Railscast #343](https://github.com/railscasts/343-full-text-search-in-postgresql) 
-- BDD
 - Include LICENCE
 
 Development Log
@@ -53,6 +52,8 @@ Notification is working, now I need to
 [add] writing `./config/schedule.rb'
 [done] wheneverized!   
 
-* remember to do RVM integration https://github.com/javan/whenever#rvm-integration
+* remember to do RVM integration https://github.com/javan/whenever#rvm-integration 
+
+*All right, time for some BDD!*
 
 
