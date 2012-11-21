@@ -10,7 +10,7 @@ Users of this example app can perform and save advanced `Searches` on `Products`
 
 ### How it works
 
-The basic idea behind user-preferred searches new results is that the `Search` model has also the following attributes:
+The basic idea behind user-preferred searches new results is that the <a href="https://github.com/duccioarmenise/NotiSearch/blob/master/app/models/search.rb">`Search`</a> model has also the following attributes:
 
 * `saved:boolean` to save the search to prevent its deletion (since advanced searches are models backed by the DB, the `Search#clear_unsaved` recurring process takes care of deleting the old unsaved ones) 
 * `notify:boolean` to switch on/off email notification of new results 
