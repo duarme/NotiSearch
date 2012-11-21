@@ -30,9 +30,9 @@ Last but not least <a href="https://github.com/duccioarmenise/NotiSearch/blob/ma
 
 The most important pieces of code were BDD, so you can get a glance of what they do also reading the following specs:
 
-* `search_spec.rb`
-* `new_results_notification_spec.rb`
-* `user_mailer_spec.rb`
+* <a href="https://github.com/duccioarmenise/NotiSearch/blob/master/spec/models/search_spec.rb">`search_spec.rb`</a>
+* <a href="https://github.com/duccioarmenise/NotiSearch/blob/master/spec/scheduled_jobs/new_results_notification_spec.rb">`new_results_notification_spec.rb`</a>
+* <a href="https://github.com/duccioarmenise/NotiSearch/blob/master/spec/mailers/user_mailer_spec.rb">`user_mailer_spec.rb`</a>
 
 ### To get started
 
