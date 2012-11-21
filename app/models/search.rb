@@ -22,27 +22,31 @@ class Search < ActiveRecord::Base
   belongs_to :user
 
   # Asyncnchronously handled class methods
-  class << self 
-    # Checks new results presence to be notified only for serches with notify: true, new_results_presence: false
+  class << self
+     
+    # Checks new results presence to be notified only for searches with notify: true, new_results_presence: false
     def check_new_results_presence
       searches = Search.where(notify: true).where(new_results_presence: false).order(:new_results_checked_at).limit(CONFIG[:number_of_searches_to_be_checked_for_new_results])
       # for each search checks new results since last check
-      searches.each {|s| s.new_results(s.new_results_checked_at ? s.new_results_checked_at : s.updated_at)}
+      searches.each {|s| s.new_results(s.new_results_checked_at)}
     end
     handle_asynchronously :check_new_results_presence, queue: 'searches-check-new-results-presence', priority: 5
-
+    
+    # Fetches users with searches with new_results to be notified and then, for each of them, it calls the notification mailer
     def notify_new_results_by_mail
-      # fetch users to be notified    
+      # fetch users to be notified, it is easier fetching all searches with new_results (and notify = true) with distinct on user_id    
       searches = Search.select('DISTINCT searches.user_id, searches.notified_at').where(new_results_presence: true).order(:notified_at).limit(CONFIG[:max_daily_emails])
       # notify users 
       searches.each {|s| UserMailer.delay(queue: 'searches-newsletters-delivering', priority: 1).new_search_results_for(s.user)}
     end
     handle_asynchronously :notify_new_results_by_mail, queue: 'searches-newsletters-processing', priority: 0
-
+    
+    # Deletes unsaved searches from database
     def clear_unsaved
       Search.where(saved: false).where('updated_at < ?', Time.now - CONFIG[:search_life_in_days].days).destroy_all
     end
     handle_asynchronously :clear_unsaved, queue: 'searches-clear-unsaved', priority: 10 
+    
   end
 
   # TODO
@@ -54,7 +58,9 @@ class Search < ActiveRecord::Base
   end 
 
   # checks new results since time_reference
-  def new_results(time_reference = self.updated_at)
+  # if no time_reference is specified, then time_reference is self.updated_at
+  def new_results(time_reference)
+    time_reference = self.updated_at unless time_reference 
     @new_results ||= find_new_results(time_reference)
   end  
 

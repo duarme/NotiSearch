@@ -16,9 +16,23 @@ The basic idea behind user-preferred searches new results is that the `Search` m
 * `notify:boolean` to switch on/off email notification of new results 
 * `notified_at:timestamp` with the time of its last notification, so the `find_new_results` private method can filter products based on whether they were created or updated after the last notification. See `Search#new_results`; 
 * `new_results_presence:boolean` is a flag set to true whenever new results are found for the Search, only searches with this flag set to true are processed for mail notification purposes
-* `new_results_checked_at:timestamp` holds the time reference of when the new results where found.      
+* `new_results_checked_at:timestamp` holds the time reference of _when_ the new results where found. 
 
-New search results for every search are searched periodically, see <a href="https://github.com/duccioarmenise/NotiSearch/blob/master/config/schedule.rb">schedule.rb</a>.  
+And then `Search` has also the following class methods:
+
+* `Search.check_new_results_presence` checks new results presence to be notified only for searches with `notify: true` and `new_results_presence: false`
+* `Search.notify_new_results_by_mail` fetches users with searches with new_results to be notified and then, for each of them, it calls the notification mailer (`UserMailer#new_search_results_for(user)`)
+* `Search.clear_unsaved` deletes unsaved searches from database  
+
+Each one of these tree class methods are run periodically by Whenever (see <a href="https://github.com/duccioarmenise/NotiSearch/blob/master/config/schedule.rb">schedule.rb</a>) in background jobs handled by Delayed_job.
+
+Last but not least `UserMailer#new_search_results_for(user)` mailer fetches all new search results for every search of the passed user, collect them in a `@new_result_sets` hash (in which the searches are the keys and the related new results are the values) and then touches the `notified_at` attribute for every search in it. The email template will then use `@new_result_sets` to generate the email body. 
+
+The most important pieces of code were BDD, so you can get a glance of what they do also reading the following specs:
+
+* search_spec.rb
+* new_results_notification_spec.rb
+* user_mailer_spec.rb
 
 ### To get started
 
