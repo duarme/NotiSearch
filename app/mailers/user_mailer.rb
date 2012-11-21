@@ -11,6 +11,10 @@ class UserMailer < ActionMailer::Base
     mail to: user.email, subject: "Password Reset"
   end 
   
+  # Fetches all new search results for every search of the passed user, collect them in the
+  # @new_result_sets hash (in which the searches are the keys and the related new results are the values)
+  # and then touches the notified_at attribute for every search in it
+  # the email template will then use @new_result_sets to generate the email body 
   def new_search_results_for(user)
     @user = user   
     @new_result_sets = new_result_sets_for(@user.searches)
