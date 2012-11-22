@@ -29,10 +29,11 @@ Each one of these tree class methods are run periodically by <a href="https://gi
 Last but not least <a href="https://github.com/duccioarmenise/NotiSearch/blob/master/app/mailers/user_mailer.rb">`UserMailer#new_search_results_for(user)`</a> mailer fetches all new search results for every search of the passed user, collect them in a `@new_result_sets` hash (in which the searches are the keys and the related new results are the values) and then touches the `notified_at` attribute for every search in it. The email template will then use `@new_result_sets` to generate the email body. 
 
 The most important pieces of code were BDD, so you can get a glance of what they do also reading the following specs:
-
-* <a href="https://github.com/duccioarmenise/NotiSearch/blob/master/spec/models/search_spec.rb">`search_spec.rb`</a>
+                                                                                                                    
 * <a href="https://github.com/duccioarmenise/NotiSearch/blob/master/spec/scheduled_jobs/new_results_notification_spec.rb">`new_results_notification_spec.rb`</a>
-* <a href="https://github.com/duccioarmenise/NotiSearch/blob/master/spec/mailers/user_mailer_spec.rb">`user_mailer_spec.rb`</a>
+* <a href="https://github.com/duccioarmenise/NotiSearch/blob/master/spec/mailers/user_mailer_spec.rb">`user_mailer_spec.rb`</a>  
+* <a href="https://github.com/duccioarmenise/NotiSearch/blob/master/spec/models/search_spec.rb">`search_spec.rb`</a>
+
 
 ### To get started
 
