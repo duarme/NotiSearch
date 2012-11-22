@@ -1,7 +1,7 @@
 NotiSearch Example App
 =====================
 
-This Example App allows its users to perform advanced searches, save them and subscribe to receive new search results via email.
+This Example App allows its users to subscribe their advanced searches to receive new search results via email.
 
 Overview
 --------
