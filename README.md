@@ -59,7 +59,7 @@ This will simply show you your `schedule.rb` file converted to cron syntax. It d
 
 ### Please note
 
-* There is no navigation links yet, so you should navigate through resources using the address bar and RESTful actions, see routes.rb
+* There are no navigation links yet, so you should navigate through resources using the address bar and RESTful actions, see routes.rb
 * Searches#index shows only the searches of the current user (this isn't ideal but was the simplest solution)
 * There is no authorization logic because isn't needed in an example app 
 * It relies on PostgreSQL for full-text search.
