@@ -28,7 +28,7 @@ class Search < ActiveRecord::Base
     def check_new_results_presence
       searches = Search.where(notify: true).where(new_results_presence: false).order(:new_results_checked_at).limit(CONFIG[:number_of_searches_to_be_checked_for_new_results])
       # for each search checks new results since last check
-      searches.each {|s| s.new_results(s.new_results_checked_at)}
+      searches.each {|s| s.check_for_new_results}
     end
     handle_asynchronously :check_new_results_presence, queue: 'searches-check-new-results-presence', priority: 5
     
@@ -59,11 +59,11 @@ class Search < ActiveRecord::Base
 
   # checks new results since time_reference
   # if no time_reference is specified, then time_reference is self.updated_at
-  def new_results(time_reference)
-    time_reference = self.updated_at unless time_reference 
+  def new_results(time_reference = self.updated_at)
     @new_results ||= find_new_results(time_reference)
   end  
-
+  
+  # DEPRECATED
   # called from views to show recent new results 
   def recent_new_results
     @recent_new_results ||= find_recent_new_results
@@ -86,6 +86,18 @@ class Search < ActiveRecord::Base
     self.keywords = keywords
   end
   
+  def check_for_new_results
+    time_reference = (self.new_results_checked_at ? new_results_checked_at : updated_at)
+    new_result_products = products.where("updated_at >= ?", time_reference)
+    # update new_result_presence and checked_at if needed 
+    # note that new_results_presence in this method can go from false to true but cannot go from true to false.
+    # Only after the new search results are notified by mail is set back to false calling Search#notified!
+    unless new_results_presence 
+      self.update_attributes(new_results_presence: new_result_products.any?, new_results_checked_at: Time.now)
+    end 
+    return new_result_products
+  end
+  
   private
     
     def find_products
@@ -98,13 +110,10 @@ class Search < ActiveRecord::Base
   
     def find_new_results(time_reference)
       new_result_products = products.where("updated_at >= ?", time_reference)
-      # update new_result_presence and checked_at if needed 
-      # note that new_results_presence in this method can go from false to true but cannot go from true to false
-      # only after the new search results are notified by mail is set back to false calling Search#notified!
-      self.update_attributes(new_results_presence: new_result_products.any?, new_results_checked_at: Time.now) unless new_results_presence 
       return new_result_products
     end  
-
+    
+    # DEPRECATED
     def find_recent_new_results
       products.where("updated_at >= ?", Time.now - 30.days).order('updated_at DESC')
     end  
