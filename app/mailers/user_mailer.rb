@@ -34,8 +34,8 @@ class UserMailer < ActionMailer::Base
     searches.each do |s|
       # If a search has never been notified before, since notified_at is nil, 
       # the time_reference is the search created_at attribute. 
-      tr = s.notified_at ? s.notified_at : s.created_at
-      new_result_sets[s] = s.new_results(tr) if s.notify && s.new_results(tr).count > 0 
+      time_reference = (s.notified_at ? s.notified_at : s.created_at)
+      new_result_sets[s] = s.new_results(time_reference) if s.notify && s.new_results(time_reference).count > 0 
     end
     return new_result_sets
   end  
