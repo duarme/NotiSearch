@@ -88,14 +88,14 @@ class Search < ActiveRecord::Base
   
   def check_for_new_results
     time_reference = (self.new_results_checked_at ? new_results_checked_at : updated_at)
-    new_result_products = products.where("updated_at >= ?", time_reference)
+    found_new_results = find_new_results(time_reference)
     # update new_result_presence and checked_at if needed 
     # note that new_results_presence in this method can go from false to true but cannot go from true to false.
     # Only after the new search results are notified by mail is set back to false calling Search#notified!
     unless new_results_presence 
-      self.update_attributes(new_results_presence: new_result_products.any?, new_results_checked_at: Time.now)
+      self.update_attributes(new_results_presence: found_new_results.any?, new_results_checked_at: Time.now)
     end 
-    return new_result_products
+    return found_new_results.any?
   end
   
   private
@@ -109,8 +109,7 @@ class Search < ActiveRecord::Base
     end
   
     def find_new_results(time_reference)
-      new_result_products = products.where("updated_at >= ?", time_reference)
-      return new_result_products
+      products.where("updated_at >= ?", time_reference)
     end  
     
     # DEPRECATED
