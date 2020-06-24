@@ -1,3 +1,5 @@
+**DEPRECATED:** It's been 8 years now, plase don't use code inspired by this repository in production. Be aware that I was a junior developer when i wrote this :)
+
 NotiSearch Example App
 =====================
 
@@ -72,7 +74,7 @@ Credits
 * Users development is based on [Rails Tutorial by Michael Hartl](http://ruby.railstutorial.org/book/ruby-on-rails-tutorial#cha-modeling_users)
 * User remember me and reset password based on [Railscast #275](http://railscasts.com/episodes/275-how-i-test)
 * Advanced Searches based on [Railscast #111](https://github.com/railscasts/111-advanced-search-form-revised)
-* Newsletter about new results in user-preferred searches by <a href="http://duccioarmenise.net" title="Duccio Armenise Web Developer">Duccio Armenise</a> :-).
+* Newsletter about new results in user-preferred searches by <a href="https://duccio.publicv.it" title="Duccio Armenise">Duccio Armenise</a> :-).
 
 #### Acknowledgements
 
