@@ -1,4 +1,4 @@
-**DEPRECATED:** It's been 8 years now, plase don't use code inspired by this repository in production. Be aware that I was a junior developer when i wrote this :)
+**DEPRECATED:** It's been 8 years now, plase don't use code inspired by this repository in production. Be aware that I was a junior developer when I wrote this :)
 
 NotiSearch Example App
 =====================
