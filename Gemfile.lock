@@ -67,7 +67,7 @@ GEM
     factory_girl_rails (4.1.0)
       factory_girl (~> 4.1.0)
       railties (>= 3.0.0)
-    ffi (1.1.5)
+    ffi (1.13.1)
     growl (1.0.3)
     guard (1.5.4)
       listen (>= 0.4.2)
